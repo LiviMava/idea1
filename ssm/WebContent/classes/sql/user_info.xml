@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.userinfo.dao.IUserInfoDao">
+	<select id="page" resultType="com.jd.vo.UserInfo">
+		select * from user_inf 
+		<where>
+			<if test="name!=null and name!=''">
+				name like #{name}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and mobile=#{mobile}
+			</if>
+		</where>
+		order by id limit #{index}, #{pageSize}
+	</select>
+	
+	<select id="getCount" resultType="_int">
+		select count(*) count from user_inf
+		<where>
+			<if test="name!=null and name!=''">
+				name like #{name}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				and mobile=#{mobile}
+			</if>
+		</where>
+	</select>
+	
+	<delete id="delete">
+		delete from user_inf where id=#{id}
+	</delete>
+	<insert id="add">
+		insert into user_inf (id,name,mobile,address,img) values (#{id},#{name},#{mobile},#{address},#{img})
+	</insert>
+	<select id="get" resultType="com.jd.vo.UserInfo">
+		select * from user_inf where id=#{id}
+	</select>
+	<update id="update">
+		update user_inf set name=#{name},mobile=#{mobile},address=#{address},img=#{img} where id=#{id}
+	</update>
+</mapper>
